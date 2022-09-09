@@ -8,7 +8,7 @@ class Altinkaynak:
         import http.client
         import urllib.parse
         import xml.etree.ElementTree as ET
-        from datetime import datetime,timedelta,timezone
+        from datetime import datetime,timedelta
 
         xml_data =   """<?xml version="1.0" encoding="utf-8"?>
                         <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -38,7 +38,7 @@ class Altinkaynak:
         curr_dict = {}
         for kur in curr_root:
             date_tr = datetime.strptime(kur[4].text,"%d.%m.%Y %H:%M:%S")
-            date_aware =  (date_tr - timedelta(hours=3)).replace(tzinfo=timezone.utc)
+            date_aware =  (date_tr - timedelta(hours=3)).strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
             curr_dict[kur[0].text] = {
                                       "sell":float(kur[3].text),
